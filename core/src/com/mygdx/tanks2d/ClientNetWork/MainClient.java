@@ -5,7 +5,6 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.mygdx.tanks2d.ClientNetWork.VoiceChat.VoiceChatClient;
 
-import tanks.io.ClientNetWork.VoiceChat.VoiceChatClient;
 
 public class MainClient {
     public Client client;   //клиент

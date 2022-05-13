@@ -20,11 +20,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.tanks2d.MainGame;
+import com.mygdx.tanks2d.Screens.GamePlayScreen;
 
-
-
-import tanks.io.MainGame;
-import tanks.io.Screens.GamePlayScreen;
 
 /**
  * Created by brentaureli on 10/23/15.

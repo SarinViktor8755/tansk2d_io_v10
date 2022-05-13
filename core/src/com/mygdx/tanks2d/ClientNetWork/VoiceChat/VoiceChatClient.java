@@ -137,10 +137,13 @@ public class VoiceChatClient implements Disposable{
 	 * @param connection The connection to the server.
 	 * @param message The message received.
 	 */
-	public void processAudio(short[] samples, Connection connection, VoiceNetData message){
-		Thread thread = new Thread(() -> {
-			short[] received = message.getData();
-			player.writeSamples(received, 0, received.length);
+	public void processAudio(short[] samples, Connection connection, final VoiceNetData message){
+		Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				short[] received = message.getData();
+				player.writeSamples(received, 0, received.length);
+			}
 		});
 		thread.start();
 	}
@@ -150,23 +153,26 @@ public class VoiceChatClient implements Disposable{
 		
 		if(this.player == null)
 			this.createPlayer();
-		AudioDevice player = this.player;
-		
+		final AudioDevice player = this.player;
+
 		server.addListener(new Listener(){
 			public void received(Connection connection, Object object) {
 				if(object instanceof VoiceNetData){
-					
+
 					// Read data
-					VoiceNetData message = (VoiceNetData)object;					
-					short[] data = message.getData();
-					
+					VoiceNetData message = (VoiceNetData)object;
+					final short[] data = message.getData();
+
 					// Play audio
-					Thread thread = new Thread(() -> {
-						player.writeSamples(data, 0, data.length);
+					Thread thread = new Thread(new Runnable() {
+						@Override
+						public void run() {
+							player.writeSamples(data, 0, data.length);
+						}
 					});
 					thread.start();
 				}
-			}			
+			}
 		});
 	}
 	
@@ -179,7 +185,7 @@ public class VoiceChatClient implements Disposable{
 	 * @param delta The time, in seconds, between concurrent calls to this method.
 	 * If this method is called 60 times per second, this value should be (1/60). In LibGDX, use <code>Gdx.graphics.getDeltaTime()</code>.
 	 */
-	public void sendVoice(Client client, float delta){
+	public void sendVoice(final Client client, float delta){
 		
 		float interval = 1f / this.getSendRate();
 		timer += delta;
@@ -193,21 +199,25 @@ public class VoiceChatClient implements Disposable{
 			
 			// Make new thread
 			ready = false;
-			Thread thread = new Thread(() -> {
-				// Need to check if data needs sending. TODO
-				int packetSize = (int) (this.getSampleRate() / this.getSendRate());
-				if(data == null){
-					data = new short[packetSize];
+			Thread thread = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					// Need to check if data needs sending. TODO
+					int packetSize = (int) (VoiceChatClient.this.getSampleRate() / VoiceChatClient.this.getSendRate());
+					if (data == null) {
+						data = new short[packetSize];
+					}
+
+					// This will block! We need to do this in a separate thread!
+					if (VoiceChatClient.this.recorder == null)
+						VoiceChatClient.this.createRecorder();
+					VoiceChatClient.this.recorder.read(data, 0, packetSize);
+
+					// Send to server, this will not block but may affect networking...
+					client.sendUDP(new VoiceNetData(data));
+
+					ready = true;
 				}
-
-				// This will block! We need to do this in a separate thread!
-				if(this.recorder == null) this.createRecorder();
-				this.recorder.read(data, 0, packetSize);
-
-				// Send to server, this will not block but may affect networking...
-				client.sendUDP(new VoiceNetData(data));
-
-				ready = true;
 			});
 			thread.start();			
 		}		
