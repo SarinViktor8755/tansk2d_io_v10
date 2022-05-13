@@ -1,112 +1,138 @@
 package com.mygdx.tanks2d.Locations;
 
 
-import com.badlogic.gdx.graphics.g3d.environment.PointLight;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.physics.box2d.Body;
+
 import com.badlogic.gdx.physics.box2d.World;
 
+import com.mygdx.tanks2d.MainGame;
 import java.util.ArrayList;
 
-public class LightingBox2D {
+import box2dLight.ConeLight;
+import box2dLight.PointLight;
+import box2dLight.RayHandler;
+
+public class B2lights {
     private World world;
 
-    private GameSpace gameSpace;
-
-    private RayHandler rayHandlerHero;
     private PointLight pointLightHero;
+    private ObFromLight object;
+    private RayHandler rayHandlerHero;
+
+    private ArrayList<PointLight> pointLightsList = new ArrayList<PointLight>();
+
     private ConeLight coneLightHero;
     private ConeLight coneLightTower;
+
+    private BuletFlash buletFlash;
     private boolean lasetOn;
+
     private float laserLith;
-    private RayHandler rayHandler;
 
-    private ArrayList<PointLight> pointLightsList;
-
-    private Box2DDebugRenderer box2DDebugRenderer;
-
-    private BuletFlash buletFlash; // вспышка от выстрела
-
-    public LightingBox2D(GameSpace gameSpace) {
+    public B2lights(MainGaming mg) {
         lasetOn = true;
-        this.gameSpace = gameSpace;
-        this.world = new World(new Vector2(0, 0), true);
-        // RayHandler.useDiffuseLight(true);
-        laserLith = 0;
-        this.rayHandlerHero = new RayHandler(this.world);
-        this.rayHandler = new RayHandler(this.world);
-        //  rayHandlerHero.setAmbientLight(0, 0, 0.15f, .15f);
-        //  rayHandlerHero.setAmbientLight(.5f);
-        rayHandlerHero.setShadows(true);
-        //  rayHandlerHero.shadowBlendFunc.set(GL20.GL_UNSIGNED_SHORT, GL20.GL_VERTEX_SHADER);
+        //Gdx.app.log("Gdx version", com.badlogic.gdx.Version.VERSION);
+        this.world = mg.getWorld();
+        pointLightsList = new ArrayList<>();
         RayHandler.useDiffuseLight(true);
-        pointLightHero = new PointLight(rayHandlerHero, 180 /4 * 3 , Color.WHITE, 850, 0, 0);
-        //свитильник геро
-        coneLightHero = new ConeLight(rayHandlerHero, 90, Color.ROYAL, 200, 0, 0, 90, 60);
-        coneLightTower = new ConeLight(rayHandlerHero, 3, Color.RED, 450, 0, 0, 45, 2); // лазер
-        buletFlash = new BuletFlash(rayHandlerHero);// вспышка от выстрелаz
-    }
+        this.rayHandlerHero = new RayHandler(this.world);
+        object = new ObFromLight(this.world); // припятсвия
+        object.crearBodys(mg.getIndexMap().getTopQualityMap_Box());
+        PointLight pl;
 
-    public void upDateLights(float xHero, float yHero, float align) {
-        pointLightHero.setPosition(xHero, yHero);
-        for (PointLight p : pointLightsList) {
-            p.setPosition(p.getX()+ MathUtils.random(-10,10),p.getY()+ MathUtils.random(-10,10));
-            p.setPosition(MathUtils.clamp(p.getPosition().x,0,5000),MathUtils.clamp(p.getPosition().y,0,5000));
+
+        // поле
+        for (int i = 0; i < 5000; i += 500) {
+            for (int j = 0; j < 5000; j += 500) {
+                pl = new PointLight(rayHandlerHero, 10, getColorFromPoint(), 1300, j, i);
+                pl.setIgnoreAttachedBody(false);
+                pointLightsList.add(pl);
+            }
         }
+        coneLightTower = new ConeLight(rayHandlerHero, 3, Color.RED, 1800, 0, 0, 45, 4); // лазер
+        pointLightHero = new PointLight(rayHandlerHero, 4, Color.ROYAL, 600, 0, 0); /// свитильник героя
+        coneLightHero = new ConeLight(rayHandlerHero, 65, Color.ROYAL, 1500, 0, 0, 90, 60);
+//
+
+        buletFlash = new BuletFlash(rayHandlerHero);
+
+        //на машинах
+        for (Body cars : object.getBodyList()) {
+            pl = new PointLight(rayHandlerHero, 4, getColorFromPoint(), 800, cars.getPosition().x, cars.getPosition().y);
+            pl.attachToBody(cars);
+        }
+
+        rayHandlerHero.setAmbientLight(.5f);
+
+        // rayHandlerHero.setShadows();
     }
 
-    public World getWorld() {
-        return world;
-    }
-
-    public BuletFlash getBuletFlash() {
-        return buletFlash;
-    }
-
-    public void renderLights(Camera camera) {
-        rayHandlerHero.setCombinedMatrix((OrthographicCamera) camera);
-        rayHandlerHero.updateAndRender();
-        upDateLights();
-        if (buletFlash.isLife()) buletFlash.upDate();
-    }
-
-    public void upDateLights() {
-        world.step(1 / 60f, 1, 1);
-        // this.coneLightTower.setActive(lasetOn);
-        if (lasetOn) laserLith = laserLith + Gdx.graphics.getDeltaTime() * 250;
-        else laserLith = laserLith - Gdx.graphics.getDeltaTime() * 350;
-
-        laserLith = MathUtils.clamp(laserLith,0,400);
-       // System.out.println(laserLith);
-        coneLightTower.setDistance(laserLith);
-    }
-
-    public void startBulletFlash(float x, float y) {
-        buletFlash.newFlesh(x, y);
-    }
-
-    public void setPointL(float x, float y) {
-        this.pointLightHero.setPosition(x, y);
-    }
-
-    public void setCone(float x, float y, float align) {
-        this.coneLightHero.setPosition(x, y);
-        this.coneLightHero.setDirection(align);
-    }
 
     public void setConeTower(float x, float y, float align) {
         this.coneLightTower.setPosition(x, y);
         this.coneLightTower.setDirection(align);
     }
 
-    public void coneLightHeroAgree() {
-        if (MathUtils.randomBoolean(.5f)) if (MathUtils.randomBoolean())
-            coneLightHero.setConeDegree(coneLightHero.getConeDegree() - 2);
-        else coneLightHero.setConeDegree(coneLightHero.getConeDegree() - 2);
-        coneLightHero.setConeDegree(MathUtils.clamp(coneLightHero.getConeDegree(), 50, 65));
+    Color getColorFromPoint() {
+        Color colorPoint;
+        if (MathUtils.randomBoolean(.1f)) colorPoint = Color.CHARTREUSE;
+        else if ((MathUtils.randomBoolean(.1f))) colorPoint = Color.RED;
+        else if ((MathUtils.randomBoolean(.1f))) colorPoint = Color.NAVY;
+        else if ((MathUtils.randomBoolean(.1f))) colorPoint = Color.BLUE;
+        else if ((MathUtils.randomBoolean(.2f))) colorPoint = Color.OLIVE;
+        else if ((MathUtils.randomBoolean(.3f))) colorPoint = Color.YELLOW;
+        else colorPoint = Color.BROWN;
+        return colorPoint;
+    }
+
+
+    public void upDateLights(float xHero, float yHero, float align) {
+        world.step(1 / 30f, 1, 1);
+        coneLightHero.setPosition(xHero, yHero);
+        pointLightHero.setPosition(xHero, yHero);
+        coneLightHero.setDirection(align);
+        buletFlash.upDate();
+
+
+        /////////////////////
+        laserLith = MathUtils.clamp(laserLith, 300, 1800);
+        coneLightTower.setDistance(laserLith);
+        if (lasetOn) laserLith = laserLith + Gdx.graphics.getDeltaTime() * 550;
+        else laserLith = laserLith - Gdx.graphics.getDeltaTime() * 550;
+        coneLightTower.setDistance(laserLith);
+
+    }
+
+    public void renderLights(OrthographicCamera camera) {
+        rayHandlerHero.setCombinedMatrix(camera);
+        rayHandlerHero.updateAndRender();
+    }
+
+    public boolean isLasetOn() {
+        return lasetOn;
     }
 
     public void setLasetOn(boolean lasetOn) {
         this.lasetOn = lasetOn;
     }
+
+    public boolean isAtShadow(float x, float y) {
+        return rayHandlerHero.pointAtShadow(x, y);
+    }
+
+    public Texture getTexture() {
+        return rayHandlerHero.getLightMapTexture();
+    }
+
+
+    public void startBulletFlash(float x, float y) {
+        buletFlash.newFlesh(x, y);
+    }
+
 }
+
