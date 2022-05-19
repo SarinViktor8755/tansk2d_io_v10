@@ -18,7 +18,8 @@ public class Network {
         kryo.register(Integer.class);
         kryo.register(PleyerPosition.class);
         kryo.register(PleyerPositionNom.class);
-        kryo.register(StockMess.class);
+        kryo.register(StockMessOut.class);
+        kryo.register(StockMessInClient.class);
     }
 
     /////////////////////////////////////
@@ -36,13 +37,22 @@ public class Network {
     }
 
 
-    public static class StockMess {   //сообщение из стока
+    public static class StockMessOut {   //сообщение из стока
         public int tip;
         public float p1;
         public float p2;
         public float p3;
         public float p4;
         public String textM;
-        public Integer nomer_pley;
+    }
+
+    public static class StockMessInClient {   //сообщение из стока
+        public int tip;
+        public float p1;
+        public float p2;
+        public float p3;
+        public float p4;
+        public String textM;
+        Integer nomerPlayer;
     }
 }

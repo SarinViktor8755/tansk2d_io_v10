@@ -38,7 +38,7 @@ public class MainGame extends Game {
 
 
 		mainClient = new MainClient();
-		// this.getAllAssets();
+
 		if (tip == 1) ANDROID = true;
 		else ANDROID = false;
 

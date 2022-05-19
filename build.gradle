@@ -100,6 +100,8 @@ project(":core") {
 //        natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-arm64-v8a"
 //        natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86"
 //        natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86_64"
+
+        api 'com.google.android.gms:play-services-ads:15.0.0'
     }
 }
 
