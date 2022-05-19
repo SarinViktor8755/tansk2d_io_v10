@@ -23,16 +23,15 @@ public class Network {
 
     /////////////////////////////////////
     public static class PleyerPosition {   //позиция
-        public Integer xp;
-        public Integer yp;
-        public Integer roy_tower;
+        public float xp;
+        public float yp;
+        public float roy_tower;
     }
 
     public static class PleyerPositionNom {   //ответ позиция с номером
         public Integer nom;
         public Integer xp;
         public Integer yp;
-
         public Integer roy_tower;
     }
 

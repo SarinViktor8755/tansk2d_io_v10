@@ -164,7 +164,7 @@ public class OpponentsTanks { // ОДИН ТАНК
         Vector2 smooke = getPoSmoke();
        /// gsp.getBullets().addBullet(smooke, getDirection_tower().cpy().nor().scl(speed));
         gsp.getAudioEngine().pleySoundKickStick((25000 - VectorUtils.getLen2(position, gsp.getTank().getPosition())) / 25000);
-        gsp.getGameSpace().getLighting().getBuletFlash().newFlesh(position.x, position.y);
+//        gsp.getGameSpace().getLighting().getBuletFlash().newFlesh(position.x, position.y);
 
         gsp.pc.addPasricalExplosion(.3f, smooke.x, smooke.y);
         gsp.pc.addParticalsSmokeOne(smooke.x, smooke.y);

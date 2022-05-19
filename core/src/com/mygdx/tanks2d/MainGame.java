@@ -4,9 +4,11 @@ package com.mygdx.tanks2d;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.tanks2d.Assets.AssetsManagerGame;
 import com.mygdx.tanks2d.ClientNetWork.MainClient;
 import com.mygdx.tanks2d.Screens.GamePlayScreen;
+import com.mygdx.tanks2d.Screens.GamePlayScreenSP;
 import com.mygdx.tanks2d.Screens.MenuScreen;
 import com.mygdx.tanks2d.adMod.AdAds;
 
@@ -70,7 +72,7 @@ public class MainGame extends Game {
 		mainMenu.dispose();
 		//  getMainClient().setOnLine(false);
 		assetsManagerGame.loadAllAsseGame();
-		this.gsp = new GamePlayScreenSP(this);
+		this.gsp = new GamePlayScreen(this);
 		this.setScreen(this.gsp);
 		//     mainClient.getClient().dispose();
 	}
@@ -104,8 +106,7 @@ public class MainGame extends Game {
 	}
 
 	public void updateClien() {
-
-		//    this.getMainClient().upDateClient();
+			    this.getMainClient().upDateClient();
 	}
 
 

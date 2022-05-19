@@ -324,8 +324,8 @@ public class Tank {
         //directionMovementControll
         Vector2 temp = position.cpy().sub(direction_tower.cpy().scl(-160));
         gsp.getCameraGame().moveFloatCameraToPoint(temp.x, temp.y, (int) 3.5); //камера перемещение
-        gsp.getGameSpace().getLighting().setPointL(position.x, position.y); //освещение перемещение
-        gsp.getGameSpace().getLighting().setCone(position.x, position.y, direction.angleDeg());
+//        gsp.getGameSpace().getLighting().setPointL(position.x, position.y); //освещение перемещение
+//        gsp.getGameSpace().getLighting().setCone(position.x, position.y, direction.angleDeg());
         gsp.getGameSpace().getLighting().setConeTower(position.x, position.y, direction_tower.angleDeg());
     }
 
@@ -333,8 +333,8 @@ public class Tank {
         //directionMovementControll
         Vector2 temp = position.cpy().sub(t.cpy().nor().scl(-160));
         gsp.getCameraGame().moveFloatCameraToPoint(temp.x, temp.y, (int) 3.5); //камера перемещение
-        gsp.getGameSpace().getLighting().setPointL(position.x, position.y); //освещение перемещение
-        gsp.getGameSpace().getLighting().setCone(position.x, position.y, direction.angleDeg());
+//        gsp.getGameSpace().getLighting().setPointL(position.x, position.y); //освещение перемещение
+//        gsp.getGameSpace().getLighting().setCone(position.x, position.y, direction.angleDeg());
         gsp.getGameSpace().getLighting().setConeTower(position.x, position.y, direction_tower.angleDeg());
     }
 

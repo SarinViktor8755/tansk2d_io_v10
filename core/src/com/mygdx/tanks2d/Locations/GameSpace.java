@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.tanks2d.Locations.Collision.MainCollision;
 import com.mygdx.tanks2d.Locations.UtilsLighting.b2d.BodyBuilder;
+import com.mygdx.tanks2d.MainGame;
 import com.mygdx.tanks2d.Screens.GamePlayScreen;
 
 
@@ -38,14 +39,14 @@ public class GameSpace {
 
     MainCollision mainCollision;
 
-    public GameSpace(GamePlayScreen gps) {
+    public GameSpace(GamePlayScreen gps, MainGame mainGame) {
 
         this.gps = gps;
         radspurens = new Radspurens(gps.getAssetsManagerGame().get("sled.png", Texture.class));
 
 
         float unitScale = 1f;
-        lighting = new LightingBox2D(this);
+        lighting = new LightingBox2D(mainGame);
 
 
         //map = new TmxMapLoader().load(MAP_DESETRT);
@@ -93,7 +94,7 @@ public class GameSpace {
                 BodyBuilder.createCircle(getLighting().getWorld(),  x, y, r); }
         }
 
-        System.out.println(mainCollision);
+      //  System.out.println(mainCollision);
     }
 
     public boolean checkObstacles(Vector2 pos){ // проверянет координаты с обьектами

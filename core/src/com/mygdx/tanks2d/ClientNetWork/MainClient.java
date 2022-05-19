@@ -20,8 +20,8 @@ public class MainClient {
         Network.register(client);
 
         ///////////////VC
-        voiceChatClient = new VoiceChatClient(client.getKryo());
-        voiceChatClient.addReceiver(client);
+//        voiceChatClient = new VoiceChatClient(client.getKryo());
+//        voiceChatClient.addReceiver(client);
 ////////////////
 
         client.addListener(new Listener() {
@@ -60,6 +60,15 @@ public class MainClient {
     }
 
     public void router(Object object) {
+
+    }
+
+
+    public boolean isOnLine() {
+        return true;
+    }
+
+    public void upDateClient() {
 
     }
 }

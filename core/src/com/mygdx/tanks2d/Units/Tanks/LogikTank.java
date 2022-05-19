@@ -2,8 +2,7 @@ package com.mygdx.tanks2d.Units.Tanks;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
-
-import tanks.io.Locations.GameSpace;
+import com.mygdx.tanks2d.Locations.GameSpace;
 
 public class LogikTank { /// логика сервера
 

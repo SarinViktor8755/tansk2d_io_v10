@@ -2,26 +2,27 @@ package com.mygdx.tanks2d.Locations;
 
 
 import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.physics.box2d.Body;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-
 import com.mygdx.tanks2d.MainGame;
+
 import java.util.ArrayList;
 
 import box2dLight.ConeLight;
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
 
-public class B2lights {
+
+public class LightingBox2D {
     private World world;
 
     private PointLight pointLightHero;
-    private ObFromLight object;
+   // private ObFromLight object;
     private RayHandler rayHandlerHero;
 
     private ArrayList<PointLight> pointLightsList = new ArrayList<PointLight>();
@@ -34,15 +35,15 @@ public class B2lights {
 
     private float laserLith;
 
-    public B2lights(MainGaming mg) {
+    public LightingBox2D(MainGame mg) {
         lasetOn = true;
-        //Gdx.app.log("Gdx version", com.badlogic.gdx.Version.VERSION);
-        this.world = mg.getWorld();
+
+        this.world = new World(new Vector2(0, 0), true);
         pointLightsList = new ArrayList<>();
         RayHandler.useDiffuseLight(true);
         this.rayHandlerHero = new RayHandler(this.world);
-        object = new ObFromLight(this.world); // припятсвия
-        object.crearBodys(mg.getIndexMap().getTopQualityMap_Box());
+//        object = new ObFromLight(this.world); // припятсвия
+//        object.crearBodys(mg.getIndexMap().getTopQualityMap_Box());
         PointLight pl;
 
 
@@ -59,13 +60,13 @@ public class B2lights {
         coneLightHero = new ConeLight(rayHandlerHero, 65, Color.ROYAL, 1500, 0, 0, 90, 60);
 //
 
-        buletFlash = new BuletFlash(rayHandlerHero);
+//        buletFlash = new BuletFlash(rayHandlerHero);
 
         //на машинах
-        for (Body cars : object.getBodyList()) {
-            pl = new PointLight(rayHandlerHero, 4, getColorFromPoint(), 800, cars.getPosition().x, cars.getPosition().y);
-            pl.attachToBody(cars);
-        }
+//        for (Body cars : object.getBodyList()) {
+//            pl = new PointLight(rayHandlerHero, 4, getColorFromPoint(), 800, cars.getPosition().x, cars.getPosition().y);
+//            pl.attachToBody(cars);
+//        }
 
         rayHandlerHero.setAmbientLight(.5f);
 
@@ -125,14 +126,17 @@ public class B2lights {
         return rayHandlerHero.pointAtShadow(x, y);
     }
 
-    public Texture getTexture() {
-        return rayHandlerHero.getLightMapTexture();
-    }
+//   // public Texture getTexture() {
+//        return rayHandlerHero.getLightMapTexture();
+//    }
 
 
-    public void startBulletFlash(float x, float y) {
-        buletFlash.newFlesh(x, y);
-    }
+//    public void startBulletFlash(float x, float y) {
+//        buletFlash.newFlesh(x, y);
+//    }
 
+    public World getWorld() {
+        return world;
+    };
 }
 

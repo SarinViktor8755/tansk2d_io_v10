@@ -15,6 +15,15 @@ public class ServiceClient {
         client.getClient().sendUDP(pk);
     }
 
+    static public void sendMuCoordinat(float x, float y, int anTower) {
+//        Network.PleyerPosition pp = new Network.PleyerPosition();
+//        pp.xp = x;
+//        pp.yp = y;
+//        pp.xp = x;
+//        pp.roy_tower = anTower;
+//        client.sendUDP(pp);
+    }
+
 
 
 

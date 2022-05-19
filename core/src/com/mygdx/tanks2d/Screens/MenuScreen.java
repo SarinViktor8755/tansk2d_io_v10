@@ -260,7 +260,7 @@ public class MenuScreen implements Screen {
             if(startgameSP) mainGame.startGameSPley();
 
         }
-        System.out.println(timerStartGame);
+       // System.out.println(timerStartGame);
         // if (timeInScreen > 3.2f) mainGame.startGamePley();
        // kefMashtab = Interpolation.bounceOut.apply(MathUtils.sin(timeInScreen) + 1);
         //    System.out.println(kefMashtab);

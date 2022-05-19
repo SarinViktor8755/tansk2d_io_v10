@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.tanks2d.AudioEngine.AudioEngine;
 import com.mygdx.tanks2d.CameraGame;
+import com.mygdx.tanks2d.ClientNetWork.ServiceClient;
 import com.mygdx.tanks2d.InputProcessor.InputProcessorPC;
 import com.mygdx.tanks2d.Locations.GameSpace;
 import com.mygdx.tanks2d.MainGame;
@@ -43,7 +44,7 @@ public class GamePlayScreen implements Screen {
 
         this.batch = new SpriteBatch();
         this.timeInGame = 0;
-        this.gameSpace = new GameSpace(this);
+        this.gameSpace = new GameSpace(this,mainGame);
         this.audioEngine = new AudioEngine(this);
 
         this.tanksOther = new TanksOther(this);
@@ -62,7 +63,7 @@ public class GamePlayScreen implements Screen {
         bullets = new Bullets(this);
         pc = new ParticleCustum(this, mainGame.getAssetManager().get("particle1.png", Texture.class), mainGame.getAssetManager().get("fire.png", Texture.class), mainGame.getAssetManager().get("iron.png", Texture.class),mainGame.getAssetManager().get("de.pack", TextureAtlas.class));
 
-        getMainGame().getMainClient().getNetworkPacketStock().toSendMyNik();
+        //getMainGame().getMainClient().getNetworkPacketStock().toSendMyNik();
         //get
     }
 
@@ -80,7 +81,7 @@ public class GamePlayScreen implements Screen {
 
     public void update() {
         getMainGame().updateClien();
-        getMainGame().getMainClient().sendMuCoordinat(tank.getPosition().x, tank.getPosition().y, tank.getDirection().angleDeg(), tank.getTr().getAnTower());  // кинуть на сервер мои координаты
+        ServiceClient.sendMuCoordinat(tank.getPosition().x, tank.getPosition().y, tank.getTr().getAnTower());  // кинуть на сервер мои координаты
 
     //////////    mainGame.getMainClient().getNetworkPacketStock();
 
@@ -141,7 +142,7 @@ public class GamePlayScreen implements Screen {
         //////////////////////////////////////
 
         this.batch.end();
-        this.getGameSpace().getLighting().renderLights(cameraGame.getCamera());
+      //  this.getGameSpace().getLighting().renderLights(cameraGame.getCamera()); временно
         this.controller.draw();
         this.getBatch().setColor(1, 1, 1, 1);
 
@@ -223,7 +224,7 @@ public class GamePlayScreen implements Screen {
         if (controller.isAttackButon()) {
             if (!tank.redyToAttack()) return;
             System.out.println("startFlashForMainTank !! Generator new Buulet");
-            this.getMainGame().getMainClient().getNetworkPacketStock().toSendMyShot(smooke.x, smooke.y, tank.getDirection_tower().angleDeg());
+           // this.getMainGame().getMainClient().getNetworkPacketStock().toSendMyShot(smooke.x, smooke.y, tank.getDirection_tower().angleDeg());
         }
     }
 
