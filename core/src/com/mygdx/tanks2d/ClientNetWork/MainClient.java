@@ -25,11 +25,14 @@ public class MainClient {
 
     public MainClient() {
         client = new Client();
+        client.start();
+        Network.register(client);
+
         this.networkPacketStock = new NetworkPacketStock(client);
         otherPlayer = new TreeMap<>();
         onLine = true;
 
-        this.startClient();
+       // this.startClient();
 
         client.addListener(new Listener() {
 
@@ -56,9 +59,6 @@ public class MainClient {
         System.out.println(client.isConnected());
 
     }
-
-
-
 
 
     public int getMyIdConnect() {

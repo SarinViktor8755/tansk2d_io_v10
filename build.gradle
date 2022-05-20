@@ -114,4 +114,5 @@ project(":serverTank") {
         api "com.esotericsoftware:kryonet:2.22.0-RC1"
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
     }
+
 }
