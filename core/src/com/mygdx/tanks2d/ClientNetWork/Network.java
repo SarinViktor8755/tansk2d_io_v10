@@ -5,7 +5,7 @@ import com.esotericsoftware.kryonet.EndPoint;
 
 
 public class Network {
-    final public static int udpPort = 37960, tcpPort = 37960;
+    final public static int udpPort = 37001, tcpPort = 37001;
     //final public static String ip = "176.62.66.63";
 
     //final public static String ip = "185.231.68.81";

@@ -6,6 +6,7 @@ import com.esotericsoftware.kryonet.Listener;
 import com.mygdx.tanks2d.ClientNetWork.VoiceChat.VoiceChatClient;
 import com.mygdx.tanks2d.MainGame;
 
+import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.TreeMap;
@@ -18,6 +19,9 @@ public class MainClient {
     private MainGame mg;
     private int myIdConnect;
 
+    final public static int udpPort = 37001, tcpPort = 37001;
+    final  public static String host = "127.0.0.1";
+
     private NetworkPacketStock networkPacketStock;
     public TreeMap<Integer, Network.PleyerPositionNom> otherPlayer;
 //    public HashMap<Integer, Boolean> frameUpdates; //Обновления кадра для играков
@@ -26,7 +30,17 @@ public class MainClient {
     public MainClient() {
         client = new Client();
         client.start();
+
+        // For consistency, the classes to be sent over the network are
+        // registered by the same method for both the client and server.
         Network.register(client);
+
+        try {
+            client.connect(10_000, host, Network.udpPort);
+            // Server communication after connection can go here, or in Listener#connected().
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
 
         this.networkPacketStock = new NetworkPacketStock(client);
         otherPlayer = new TreeMap<>();
@@ -49,6 +63,7 @@ public class MainClient {
             public void disconnected(Connection connection) {
             }
         });
+        System.out.println(client.isConnected() + "!!!!!!!!!!!!!!!1");
     }
 
     private void startClient() {
@@ -56,7 +71,7 @@ public class MainClient {
         this.client = new Client();
         Network.register(client);
         this.client.start();
-        System.out.println(client.isConnected());
+
 
     }
 

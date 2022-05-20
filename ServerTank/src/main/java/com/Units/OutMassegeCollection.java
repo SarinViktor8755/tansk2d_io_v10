@@ -59,7 +59,7 @@ public class OutMassegeCollection {
 
 
     public void tellParamForPlayer(int fromidUser, Player p) {
-        System.out.println("tellParamForPlayer IF:: " + fromidUser + " >>>>>");
+      //  System.out.println("tellParamForPlayer IF:: " + fromidUser + " >>>>>");
         Network.StockMess m = new Network.StockMess();
         m.tip = Heading_type.PARAMETERS_PLAYER;
         m.p1 = p.id;
@@ -109,7 +109,7 @@ public class OutMassegeCollection {
 
 
     private void addMasssage(int fromPlayer, Network.StockMess m) {
-        System.out.println("--->>add mess_fromPlayer:: " + fromPlayer);
+    //    System.out.println("--->>add mess_fromPlayer:: " + fromPlayer);
         OutMassege om = new OutMassege();
         int nom = m.time_even;
         while (outMassege.containsKey(nom)) nom++;
@@ -118,7 +118,7 @@ public class OutMassegeCollection {
         om.actual = true;
         om.timeMomenIn = System.currentTimeMillis();
         this.outMassege.put(m.time_even, om);
-        System.out.println(outMassege.size());
+      //  System.out.println(outMassege.size());
     }
 
     public synchronized void sendingQueue(Server server) { // функция отправкеи сообщений из очереди
