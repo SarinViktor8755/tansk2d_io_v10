@@ -3,9 +3,6 @@ package main.java.com.Units.Bots;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
-import java.util.Map;
-
-import tanks.io.Units.Tanks.OpponentsTanks;
 
 public class BehaviourBot { // поведение бота - вектор направлениея  - логика принятия решений
 

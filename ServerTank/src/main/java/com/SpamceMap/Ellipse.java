@@ -1,8 +1,8 @@
 package main.java.com.SpamceMap;
 
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.tanks2d.Utils.VectorUtils;
 
-import tanks.io.Utils.VectorUtils;
 
 public class Ellipse implements Figure {
     private Vector2 positionCenter;

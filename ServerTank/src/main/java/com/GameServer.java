@@ -141,8 +141,13 @@ public class GameServer extends Listener {
             public void idle(Connection connection) {
             }
         });
+        try {
+            mainGame = new MainGame(this,parsBotSize(args[0]));
+        }catch (ArrayIndexOutOfBoundsException r) {
+            mainGame = new MainGame(this,8);
+        }
 
-        mainGame = new MainGame(this,parsBotSize(args[0]));
+
         startUpdateThread();
         startUpdateBehaviourThread();
        // System.out.println("args " + parsBotSize(args[0]) + "  " + args[0]);
