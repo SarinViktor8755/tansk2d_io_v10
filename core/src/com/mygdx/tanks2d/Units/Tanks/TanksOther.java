@@ -89,52 +89,52 @@ public class TanksOther { /// много танков )))
     }
 
     public void setTankPosition(Network.PleyerPositionNom p, Boolean newFrame) {  /// ЛОГИКА ПЕРЕМЕЩЕНИЯ ТАНКА БЕЗ СИГНАЛА
-//        if (listOpponents.containsKey(p.nom)) { //Если такой опоннет есть - работаем с ним - нет - сощдаем новый
-//            OpponentsTanks ot = listOpponents.get(p.nom);
-//            /////////////
-//            if (!newFrame) { // нет фрейма
-//                if (ot.move) {
-//                    temp.set(ot.getDirection()).clamp(90, 90).scl(Gdx.graphics.getDeltaTime());
-//
-//                    if (temp.len2() > 0.5929847) {
-//                        ot.move = false;
-//                        return;
-//                    }
-//
-//                    //System.out.println(temp.len() + "  " + temp.len2());
-////                    ot.getPosition().add(temp);
-////                    System.out.println(temp.len());
-//
-//                }
-//
-//                //     System.out.println("frame FALSE");
-//
-//            } else { // есть фрейм - тогда смещаем танк к реальной точке перемещения
-//
-//                temp.set(p.xp, p.yp);
-//
-//                ot.getDirection().setAngleRad(temp.angleDeg());
-//                ot.getPosition().add(temp.sub(ot.getPosition().cpy()).scl(Gdx.graphics.getDeltaTime() * 10));
-//                //ot.getPosition().sub(temp.scl(Gdx.graphics.getDeltaTime()));
-////                System.out.println("frame TRUE");
-//            }
-//
-//            float rotation = tRotation.set(p.xp, p.yp).cpy().sub(ot.getPosition()).angleDeg();
-//
-//            if (temp.set(p.xp, p.yp).sub(ot.getPosition().cpy()).scl(10).len2() > 50)
-//                ot.move = true;
-//            else ot.move = false;
-//            ot.getDirection().setAngleDeg(rotation);
-//            ot.getDirection_tower().setAngleDeg(p.roy_tower);
-//            if (ot.move)
-//                listSled.put(p.nom, listSled.get(p.nom) + Gdx.graphics.getDeltaTime()); /// СЛЕДЫ
-//        } else {
-//            try {
-//                createOponent(p.xp, p.yp,p.nom,p.roy_tower);
-//            } catch (NullPointerException e) {
-//
-//            }
-//        }
+        if (listOpponents.containsKey(p.nom)) { //Если такой опоннет есть - работаем с ним - нет - сощдаем новый
+            OpponentsTanks ot = listOpponents.get(p.nom);
+            /////////////
+            if (!newFrame) { // нет фрейма
+                if (ot.move) {
+                    temp.set(ot.getDirection()).clamp(90, 90).scl(Gdx.graphics.getDeltaTime());
+
+                    if (temp.len2() > 0.5929847) {
+                        ot.move = false;
+                        return;
+                    }
+
+                    //System.out.println(temp.len() + "  " + temp.len2());
+//                    ot.getPosition().add(temp);
+//                    System.out.println(temp.len());
+
+                }
+
+                //     System.out.println("frame FALSE");
+
+            } else { // есть фрейм - тогда смещаем танк к реальной точке перемещения
+
+                temp.set(p.xp, p.yp);
+
+                ot.getDirection().setAngleRad(temp.angleDeg());
+                ot.getPosition().add(temp.sub(ot.getPosition().cpy()).scl(Gdx.graphics.getDeltaTime() * 10));
+                //ot.getPosition().sub(temp.scl(Gdx.graphics.getDeltaTime()));
+//                System.out.println("frame TRUE");
+            }
+
+            float rotation = tRotation.set(p.xp, p.yp).cpy().sub(ot.getPosition()).angleDeg();
+
+            if (temp.set(p.xp, p.yp).sub(ot.getPosition().cpy()).scl(10).len2() > 50)
+                ot.move = true;
+            else ot.move = false;
+            ot.getDirection().setAngleDeg(rotation);
+            ot.getDirection_tower().setAngleDeg(p.roy_tower);
+            if (ot.move)
+                listSled.put(p.nom, listSled.get(p.nom) + Gdx.graphics.getDeltaTime()); /// СЛЕДЫ
+        } else {
+            try {
+                createOponent(p.xp, p.yp,p.nom,p.roy_tower);
+            } catch (NullPointerException e) {
+
+            }
+        }
     }
 
     /////////////
@@ -239,6 +239,8 @@ public class TanksOther { /// много танков )))
 
     public void updateClienOtherTank() {
         boolean flag_mess = false; /// флаг типа делать запрос по никам или нет
+        System.out.println("getMainClient.otherPlayer " + gsp.getMainGame().getMainClient().otherPlayer.size());
+
         try {
             Iterator key = gsp.getMainGame().getMainClient().otherPlayer.keySet().iterator();
             while (key.hasNext()) {
