@@ -5,17 +5,13 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.util.HashSet;
 
-import main.java.com.Units.Bots.BehaviourBot;
-
-public class Player { /// все характеристики играков
+public class Player {
     public static final int STATUS_MENU = 1;
     public static final int STATUS_IN_GAME = 2;
     public static final int STATUS_DISCONECT = 6;
 
     private static int RED_COMMAND = 1;
     private static int BLUE_COMMAND = 2;
-
-    BehaviourBot behaviourBot;
 
     // общие
     int status = STATUS_MENU;
@@ -24,17 +20,15 @@ public class Player { /// все характеристики играков
     int hp, frags, death, command, id; //ХП
 
     String tokken, nikName;
-    HashSet<Integer> inMass;
 
     public Player(int id) {
         this.id = id;
-        this.inMass = new HashSet<Integer>();
         hp = 100;
         death = 1;
         command = MathUtils.random(1, 2);
         nikName = String.valueOf("Player no." + this.id);
 
-        this.behaviourBot = new BehaviourBot();
+       // this.behaviourBot = new BehaviourBot();
 
     }
 
@@ -146,38 +140,6 @@ public class Player { /// все характеристики играков
         this.command = command;
     }
 
-    public boolean addMass(int nMass) { //Добавляет указанный элемент в этот набор, если он еще не присутствует. Более формально, добавляет указанный элемент e к этому набору, если этот набор не содержит такого элемента e2 , что (e == null? E2 == null: e.equals (e2)) . Если этот набор уже содержит элемент, вызов оставляет набор без изменений и возвращает false .
-        return this.inMass.add(nMass);
 
-    }
 
-    public void clearQuerety(Integer nom) { // ужалить все которые отличаюстся на 5 )))
-        for (Integer s : inMass) {
-            if (Math.abs(s - nom) > 15) inMass.remove(s);
-        }
-    }
-
-    public int getSize() {
-        return this.inMass.size();
-    }
-
-    @Override
-    public String toString() {
-        return "Player{" +
-                "behaviourBot=" + behaviourBot +
-                ", status=" + status +
-                ", xp=" + xp +
-                ", yp=" + yp +
-                ", r=" + r +
-                ", rotTower=" + rotTower +
-                ", hp=" + hp +
-                ", frags=" + frags +
-                ", death=" + death +
-                ", command=" + command +
-                ", id=" + id +
-                ", tokken='" + tokken + '\'' +
-                ", nikName='" + nikName + '\'' +
-                ", inMass=" + inMass +
-                '}';
-    }
 }

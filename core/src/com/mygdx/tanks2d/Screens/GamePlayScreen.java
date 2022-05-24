@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.tanks2d.AudioEngine.AudioEngine;
 import com.mygdx.tanks2d.CameraGame;
+import com.mygdx.tanks2d.ClientNetWork.NetworkPacketStock;
 import com.mygdx.tanks2d.ClientNetWork.ServiceClient;
 import com.mygdx.tanks2d.InputProcessor.InputProcessorPC;
 import com.mygdx.tanks2d.Locations.GameSpace;
@@ -81,7 +82,9 @@ public class GamePlayScreen implements Screen {
 
     public void update() {
         getMainGame().updateClien();
-        ServiceClient.sendMuCoordinat(tank.getPosition().x, tank.getPosition().y, tank.getTr().getAnTower());  // кинуть на сервер мои координаты
+
+        // кинуть на сервер мои координаты
+        ServiceClient.sendMuCoordinat(tank.getPosition().x, tank.getPosition().y, tank.getTr().getAnTower(),mainGame.getMainClient().getClient());
 
     //////////    mainGame.getMainClient().getNetworkPacketStock();
 
@@ -224,7 +227,8 @@ public class GamePlayScreen implements Screen {
         if (controller.isAttackButon()) {
             if (!tank.redyToAttack()) return;
             System.out.println("startFlashForMainTank !! Generator new Buulet");
-           // this.getMainGame().getMainClient().getNetworkPacketStock().toSendMyShot(smooke.x, smooke.y, tank.getDirection_tower().angleDeg());
+            this.getMainGame().getMainClient().getNetworkPacketStock().toSendMyShot(smooke.x, smooke.y, tank.getDirection_tower().angleDeg());
+
         }
     }
 

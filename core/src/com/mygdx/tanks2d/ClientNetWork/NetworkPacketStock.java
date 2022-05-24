@@ -106,7 +106,7 @@ public class NetworkPacketStock {
 
 
     public void toSendMyShot(float x, float y, float alignShoot) { // мой выстрел
-            send_package_to_server(Heading_type.MY_SHOT, x, y, alignShoot, 0, null);
+          //  send_package_to_server(Heading_type.MY_SHOT, x, y, alignShoot, 0, null);
     }
 
     public void toSendMyNik() {
@@ -114,7 +114,7 @@ public class NetworkPacketStock {
     }
 
     public void toSendMyTokken() {
-        send_package_to_server(Heading_type.MY_NIK, 0, 0, 0, 0, NikName.getTokken());
+        //send_package_to_server(Heading_type.MY_NIK, 0, 0, 0, 0, NikName.getTokken());
     }
 
     public void toSendButtonStartClick() {

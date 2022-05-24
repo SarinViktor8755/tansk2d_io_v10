@@ -4,6 +4,7 @@ import java.io.IOException;
 
 public class ServerLauncher {
     public static GameServer server;
+
     public static void main(String[] args) throws IOException {
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         System.out.println("(========Start server Tank2D========)");
@@ -22,4 +23,3 @@ public class ServerLauncher {
 
     }
 }
-

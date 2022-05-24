@@ -8,7 +8,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.tanks2d.ClientNetWork.Network;
+import com.mygdx.tanks2d.ClientNetWork.PacketModel;
 import com.mygdx.tanks2d.Screens.GamePlayScreen;
+import com.mygdx.tanks2d.Utils.VectorUtils;
 
 import java.util.ArrayDeque;
 import java.util.ConcurrentModificationException;
@@ -137,6 +139,7 @@ public class TanksOther { /// много танков )))
 
     /////////////
     public int createOponent(float x, float y, int nomer, float rotation) {
+
         OpponentsTanks r = new OpponentsTanks(
                 new Vector2(x, y),
                 new Vector2(1, 0),
@@ -160,7 +163,7 @@ public class TanksOther { /// много танков )))
 
     public void randerOtherTanks(SpriteBatch sb) {
         OpponentsTanks t;
-
+        System.out.println(this.listOpponents.size());
         for (Map.Entry<Integer, OpponentsTanks> tank : this.listOpponents.entrySet()) {
             t = tank.getValue();
             updateColor(t, Gdx.graphics.getDeltaTime());
@@ -211,7 +214,6 @@ public class TanksOther { /// много танков )))
 
 
             addSled(t);
-
         }
         sb.setColor(1, 1, 1, 1);
     }
@@ -231,18 +233,18 @@ public class TanksOther { /// много танков )))
     }
 
     public void updateOtherTank(boolean onLine) {
-        if (onLine) updateClienOtherTank();
-        else updateLocalTank();
+         updateClienOtherTank();
+
     }
 
     public void updateClienOtherTank() {
-//        boolean flag_mess = false; /// флаг типа делать запрос по никам или нет
-//        try {
-//            Iterator key = gsp.getMainGame().getMainClient().otherPlayer.keySet().iterator();
-//            while (key.hasNext()) {
-//                int n = (int) key.next();
-//                Network.PleyerPositionNom p = gsp.getMainGame().getMainClient().otherPlayer.get(n);
-/////////////////Аопросить имя игрока
+        boolean flag_mess = false; /// флаг типа делать запрос по никам или нет
+        try {
+            Iterator key = gsp.getMainGame().getMainClient().otherPlayer.keySet().iterator();
+            while (key.hasNext()) {
+                int n = (int) key.next();
+                Network.PleyerPositionNom p = gsp.getMainGame().getMainClient().otherPlayer.get(n);
+///////////////Аопросить имя игрока
 //                try {
 //                    if (this.listOpponents.get(n).getNikPlayer().length() < 1) flag_mess = true;
 //                } catch (NullPointerException e) {
@@ -250,20 +252,20 @@ public class TanksOther { /// много танков )))
 //                        gsp.getMainGame().getMainClient().getNetworkPacketStock().toSendParametersOfPlayer(n);// nikname отображение
 //                    }
 //                }
-//                //////////////////
-//                setTankPosition(p, gsp.getMainGame().getMainClient().frameUpdates.get(p.nom));
-//                gsp.getMainGame().getMainClient().frameUpdates.put(p.nom, false); /// закрывает флаг о рендере __
-//            }
-//            /// обработка входящих сообщенийв
+                //////////////////
+                setTankPosition(p, gsp.getMainGame().getMainClient().frameUpdates.get(p.nom));
+                gsp.getMainGame().getMainClient().frameUpdates.put(p.nom, false); /// закрывает флаг о рендере __
+            }
+            /// обработка входящих сообщенийв
 //            ArrayDeque<PacketModel> in = gsp.getMainGame().getMainClient().inDequePacket;
 //            //System.out.println("size IN :: "+in.size());
 //            if (in.size() > 0) routingInMassage(in.pollFirst()); /// тут что то не так )))
-//
-//            if (flag_mess) if (MathUtils.randomBoolean(.01f))
-//                gsp.getMainGame().getMainClient().getNetworkPacketStock().toSendParametersOfPlayer();// nikname отображение
-//
-//        } catch (ConcurrentModificationException e) {
-//        }
+
+            //if (flag_mess) if (MathUtils.randomBoolean(.01f))
+                //gsp.getMainGame().getMainClient().getNetworkPacketStock().toSendParametersOfPlayer();// nikname отображение
+
+        } catch (ConcurrentModificationException e) {
+        }
     }
 
     public void updateLocalTank() {
